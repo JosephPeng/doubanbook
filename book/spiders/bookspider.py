@@ -19,7 +19,7 @@ class bookspider(scrapy.Spider):
     name = 'doubanbook'
     domain = 'https://book.douban.com/'
     # 用于创建目录保存book的封面图片
-    cur_dir = '/home/joseph/python/douban/book/book'
+    cur_dir = '/home/joseph/python/douban/book'
 
     tag = '当代文学'
 
@@ -48,7 +48,7 @@ class bookspider(scrapy.Spider):
         return header
 
     # 设置封面图片存储路径
-    def getCoverPath(self, dir):
+    def getCoverPath(self, dir = 'cover'):
         path = self.cur_dir
         path = os.path.join(path, dir)
         if not os.path.isdir(path):
@@ -188,7 +188,7 @@ class bookspider(scrapy.Spider):
     # save the response of the request for the cover image and named by book_id
     def parse_cover(self, response, book_id):
         self.randomSleep(sleeptime)
-        os.chdir(self.getCoverPath('cover'))
+        os.chdir(self.getCoverPath())
         with open(str(book_id) + '.jpg', 'wb') as fp:
             fp.write(response.body)
 
